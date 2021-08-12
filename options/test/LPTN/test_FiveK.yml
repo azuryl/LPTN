@@ -1,0 +1,60 @@
+# general settings
+#name: LPTN_FiveK_480p
+name: LTPN_Rewrite_299to330
+model_type: LPTNTestModel
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 10
+
+# dataset and data loader settings
+datasets:
+
+  test:
+    name: Rewrite_299to330_val
+    type: UnPairedImageDataset
+#    dataroot_gt: datasets/FiveK/FiveK_480p/test/B
+#    dataroot_lq: datasets/FiveK/FiveK_480p/test/A
+#    io_backend:
+#      type: disk
+#    dataroot_gt: datasets/FiveK/FiveK_test_target.lmdb
+#    dataroot_lq: datasets/FiveK/FiveK_test_source.lmdb
+#    dataroot_gt: datasets/delight/delight_480p/test/B
+#    dataroot_lq: datasets/delight/delight_480p/test/A
+#    dataroot_gt: datasets/delight/delight_test_target.lmdb
+#    dataroot_lq: datasets/delight/delight_test_source.lmdb
+
+#    dataroot_gt: datasets/diva/diva_test_target.lmdb
+#    dataroot_lq: datasets/diva/diva_test_source.lmdb
+#    dataroot_gt: datasets/diva/diva_G330test_target.lmdb
+#    dataroot_lq: datasets/diva/diva_G299test_source.lmdb
+#    dataroot_gt: datasets/diva/diva_480p/test/G330test
+#    dataroot_lq: datasets/diva/diva_480p/test/G299test
+    dataroot_gt: datasets/school/school_480p/test/2018-03-09.10-40-00.10-45-00.school.G330_1000p
+    dataroot_lq: datasets/school/school_480p/test/2018-03-09.10-25-00.10-30-00.school.G299_1000p
+    
+   
+    io_backend:
+#      type: lmdb
+      type: disk
+
+# network structures
+network_g:
+  type: LPTN
+  nrb_low: 5
+  nrb_high: 3
+  num_high: 3
+
+# path
+path:
+#  pretrain_network_g: experiments/pretrained_models/net_g_FiveK_numhigh3.pth
+  pretrain_network_g: experiments/pretrained_models/net_g_latest.pth
+  strict_load_g: false
+
+val:
+  save_img: true
+  suffix: ~  # add suffix to saved images, if None, use exp name
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: false
